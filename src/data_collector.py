@@ -68,6 +68,8 @@ class DataCollector:
         "Schedule",
         "Keys",
         "Description",
+        "PublishedAt",
+        "Url",
     )
 
     def __init__(self, exchange_rates: Optional[Dict]):
@@ -126,6 +128,8 @@ class DataCollector:
             vacancy.get("schedule", {}).get("name", ""),
             [el["name"] for el in vacancy.get("key_skills", [])],
             self.clean_tags(vacancy.get("description", "")),
+            vacancy.get("published_at", ""),
+            vacancy.get("alternate_url", ""),
         )
 
     @staticmethod
