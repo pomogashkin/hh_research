@@ -1,13 +1,13 @@
 {
   "options": {
-    "text": "Data Scientist",
+    "text": "Designer",
     "area": 1,
     "per_page": 50,
-    "professional_roles": [96, 10]
+    "professional_roles": [4, 6, 8, 9, 34]
   },
-  "refresh": false,
+  "refresh": true,
   "num_workers": 10,
-  "save_result": false,
+  "save_result": true,
   "rates": {
     "USD": 0.012641,
     "EUR": 0.010831,

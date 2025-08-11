@@ -54,7 +54,9 @@ class Predictor:
     @staticmethod
     def text_replace(text) -> pd.Series:
         """Clean text"""
-        return text.apply(lambda x: [i.lower() for i in x]).replace("[^a-zA-Z]\bqout\b|\bamp\b", " ", regex=True)
+        return text.apply(lambda x: [i.lower() for i in x]).replace(
+            "[^a-zA-Z]\bqout\b|\bamp\b", " ", regex=True
+        )
 
     @staticmethod
     def prepare_dataframe(df: pd.DataFrame) -> pd.DataFrame:

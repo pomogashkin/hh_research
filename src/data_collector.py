@@ -56,6 +56,7 @@ class DataCollector:
         Dict of exchange rates: RUR, USD, EUR.
 
     """
+
     __API_BASE_URL = "https://api.hh.ru/vacancies/"
     __DICT_KEYS = (
         "Ids",
@@ -68,6 +69,8 @@ class DataCollector:
         "Schedule",
         "Keys",
         "Description",
+        "PublishedAt",
+        "Url",
     )
 
     def __init__(self, exchange_rates: Optional[Dict]):
@@ -126,20 +129,26 @@ class DataCollector:
             vacancy.get("schedule", {}).get("name", ""),
             [el["name"] for el in vacancy.get("key_skills", [])],
             self.clean_tags(vacancy.get("description", "")),
+            vacancy.get("published_at", ""),
+            vacancy.get("alternate_url", ""),
         )
 
     @staticmethod
     def __encode_query_for_url(query: Optional[Dict]) -> str:
-        if 'professional_roles' in query:
+        if "professional_roles" in query:
             query_copy = query.copy()
 
-            roles = '&'.join([f'professional_role={r}' for r in query_copy.pop('professional_roles')])
+            roles = "&".join(
+                [f"professional_role={r}" for r in query_copy.pop("professional_roles")]
+            )
 
-            return roles + (f'&{urlencode(query_copy)}' if len(query_copy) > 0 else '')
+            return roles + (f"&{urlencode(query_copy)}" if len(query_copy) > 0 else "")
 
         return urlencode(query)
 
-    def collect_vacancies(self, query: Optional[Dict], refresh: bool = False, num_workers: int = 1) -> Dict:
+    def collect_vacancies(
+        self, query: Optional[Dict], refresh: bool = False, num_workers: int = 1
+    ) -> Dict:
         """Parse vacancy JSON: get vacancy name, salary, experience etc.
 
         Parameters
